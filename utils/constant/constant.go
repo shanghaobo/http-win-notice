@@ -1,7 +1,7 @@
 package constant
 
 const (
-	LinkSuffix = "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/ToastTs.lnk"
+	LinkSuffix = "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/http-win-notice.lnk"
 	BaseUrl    = "http://127.0.0.1"
 
 	ConfigFile = "config.yml"
