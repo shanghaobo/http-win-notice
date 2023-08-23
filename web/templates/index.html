@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>消息通知记录</title>
+    <script src="/static/js/vue.js"></script>
+    <link rel="stylesheet" href="/static/css/antd.css" />
+    <script src="/static/js/moment.js"></script>
+    <script src="/static/js/antd-with-locales.min.js"></script>
+    <script src="/static/js/antd.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+<!--    <a-menu v-model="current" mode="horizontal">-->
+<!--        <a-menu-item key="home">-->
+<!--            <a-icon type="home"></a-icon>-->
+<!--            首页-->
+<!--        </a-menu-item>-->
+<!--    </a-menu>-->
+
+    <div class="log-table">
+        <a-table
+            :key="tableKey"
+            :columns="columns"
+            :data-source="data"
+            :pagination="pagination"
+            :scroll="{ y: viewHeight }"
+            @change="changeHandle">
+        </a-table>
+
+    </div>
+
+</div>
+
+</body>
+<script>
+    const columns = [
+        {
+            title:"#",
+            dataIndex: 'index',
+            key: 'index',
+            width: 150,
+        },
+        {
+            title: "消息标题",
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: "消息内容",
+            dataIndex: 'msg',
+            key: 'msg',
+        },
+        {
+            title: "备注",
+            dataIndex: 'remark',
+            key: 'remark',
+        },
+        {
+            title: "时间",
+            dataIndex: 'time',
+            key: 'time',
+            width: 300,
+        },
+        {
+            title: "状态",
+            dataIndex: 'status',
+            key: 'status',
+            width: 150,
+        },
+    ]
+
+    const data = {{.msgList}}
+    const total = {{.total}}
+    const pageSize = {{.pageSize}}
+    const currentPage = {{.currentPage}}
+
+    function getEmHeightByClass(class_name){
+        let ems = document.getElementsByClassName(class_name);
+        return ems&&ems.length>0?ems[0].clientHeight:0;
+    }
+
+    new Vue({
+        el: "#app",
+        delimiters:["${", "}"],
+        data(){
+            return{
+                tableKey:0,
+                viewHeight:1080,
+                testMsg:"",
+                current: ['home'],
+                pagination:{
+                    current: currentPage,
+                    pageSize:pageSize,
+                    total:total,
+                },
+                columns,
+                data
+            }
+        },
+        mounted(){
+            this.calcTableHeadHeight();
+            window.onresize = ()=>{
+                this.calcTableHeadHeight()
+            }
+        },
+        methods:{
+            changeHandle(pagination){
+                window.location.href = "/?page="+pagination.current
+            },
+            calcTableHeadHeight(){
+                this.$nextTick(()=>{
+                    // let allPaddingHeight = 15 + 5;
+                    let tableHeadHeight = getEmHeightByClass("ant-table-thead");
+                    // let dateSearchHeight = getEmHeightByClass("top-date-picker");
+                    // console.log('dateSearchHeight=',dateSearchHeight)
+                    let paginationHeight = getEmHeightByClass('ant-table-pagination');
+                    // let paginationAllMarginHeight = 16 * 2;
+
+                    this.viewHeight = document.body.clientHeight - tableHeadHeight - paginationHeight;
+                    this.tableKey+=1;
+                    console.log('viewHeight=', this.viewHeight)
+                })
+            },
+        }
+    })
+</script>
+<style>
+
+</style>
+</html>
