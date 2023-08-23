@@ -28,7 +28,7 @@
 - [x] 托盘控制
 - [x] 端口配置
 
-Feture：
+Future：
 - [ ] Server端
 
 ## 架构
@@ -54,7 +54,7 @@ Feture：
      res = requests.get(f"http://127.0.0.1:19000/api/toast?msg={msg}&title={title}")
      print(res.json())
        ```
-5. 可右击托盘图标修改端口号
+5. 可右击托盘图标，点击配置文件修改端口号
 6. 可打开web界面查看历史消息记录
 
 ## 效果
