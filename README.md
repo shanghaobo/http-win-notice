@@ -27,7 +27,9 @@
 - [x] 开机启动
 - [x] 托盘控制
 - [x] 端口配置
-- [ ] 服务端通讯(Future)
+
+Feture：
+- [ ] Server端
 
 ## 架构
 
@@ -57,8 +59,15 @@
 
 ## 效果
 
-- 消息通知记录
-![](images/demo1.png)
+- 程序运行
+  ![](images/demo3.png)
+
 
 - 调用http消息通知接口
-![](images/demo2.png)
+  ![](images/demo2.png)
+
+- 消息通知记录
+  ![](images/demo1.png)
+
+
+
