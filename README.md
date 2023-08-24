@@ -25,15 +25,17 @@
 - [x] 开机启动
 - [x] 托盘控制
 - [x] 端口配置
+- [x] frp内网穿透集成
+- [x] 公网调用
 
-Future：
-- [ ] Server端
 
 ## 架构
 
 ![](images/jiagou.png)
 
-其中server部分还未开发完成
+- 内网环境下，局域网内可通过内网ip+端口调用，如`http://192.168.124.11:19000`
+- 公网环境可选择开启（默认关闭），配置开启后公网内可通过`frps`所在服务器公网ip+映射端口调用，如`http://123.123.1.2:19001`，此时请求经过公网服务器的frps服务转发给本机的frpc，frpc再将请求转发给本地web服务从而触发消息通知。详情查看[开启frp内网穿透](#开启frp内网穿透)
+
 
 ## 使用
 
@@ -73,4 +75,54 @@ Future：
   ![](images/demo1.png)
 
 
+## 开启frp内网穿透
 
+开启frp需要有一台带公网ip的服务器，配置并开启后可实现公网调用接口发送通知。
+
+#### 服务端配置
+
+1. 下载`frps`，选择对应服务器版本即可。[下载地址](https://github.com/fatedier/frp/releases/tag/v0.51.3)
+2. 修改`frps.ini`配置文件，配置参考：
+
+- frps.ini
+```ini
+[common]
+bind_port = 7000
+token = httpwinnotice123456
+```
+3. 启动服务端：
+
+```bash
+chmod +x ./frps
+./frps -c frps.ini
+```
+
+#### 客户端配置
+
+客户端内已集成了`frp`内网穿透功能（内置版本为`frpc-v0.51.3`），开启步骤如下：
+1. 右击托盘图标选择`配置文件`，修改配置文件内`frp`相关内容并保存。参考配置如下：
+    
+```yaml
+frp:
+    enable: 1
+    server_addr: 123.123.1.2
+    server_port: 7000
+    token: httpwinnotice123456
+    remote_port: 19001
+```
+
+配置的各项解释如下：
+
+- enable: 1-开启frp，0-关闭frp
+- server_addr: 部署frps服务器的公网ip
+- server_port: frps服务端口号
+- token: 与服务器端配置token一致，建议将默认值修改
+- remote_port: 转发的远端端口号
+
+注意服务器防火墙放开对应的端口号，以上示例配置在公网调用时使用`http://123.123.1.2:19001/api/toast`
+
+配置好后重启程序即可
+
+#### 测试
+
+浏览器打开`http://123.123.1.2:19001/api/toast?msg=哈喽` 如果windows通知出现证明开启成功（ip和端口号替换为自己的）
