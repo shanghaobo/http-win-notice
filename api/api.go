@@ -10,15 +10,9 @@ import (
 )
 
 func ToastApi(c *gin.Context) {
-	msg := c.Query("msg")
-	title := c.Query("title")
+	msg := c.DefaultQuery("msg", constant.DefaultMsg)
+	title := c.DefaultQuery("title", constant.DefaultTitle)
 	remark := c.Query("remark")
-	if msg == "" {
-		msg = constant.DefaultMsg
-	}
-	if title == "" {
-		title = constant.DefaultTitle
-	}
 
 	data := model.Msg{
 		Title:  title,
@@ -27,7 +21,7 @@ func ToastApi(c *gin.Context) {
 	}
 	res := model.CreateMsg(&data)
 	if !res {
-		c.JSON(400, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "fail, db error",
 		})
 		return
@@ -40,7 +34,7 @@ func ToastApi(c *gin.Context) {
 			model.UpdateMsgStatus(data.ID, 1)
 		}
 	}()
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message": "success",
 	})
 }
