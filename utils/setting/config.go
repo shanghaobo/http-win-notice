@@ -19,8 +19,16 @@ var DbPath string
 var LogoPath string
 
 type ConfigType struct {
-	Mode int `yaml:"mode"`
-	Port int `yaml:"port"`
+	Port int     `yaml:"port"`
+	Frp  FrpType `yaml:"frp"`
+}
+
+type FrpType struct {
+	Enable     int    `yaml:"enable"`
+	ServerAddr string `yaml:"server_addr"`
+	ServerPort int    `yaml:"server_port"`
+	Token      string `yaml:"token"`
+	RemotePort int    `yaml:"remote_port"`
 }
 
 func init() {
@@ -38,8 +46,17 @@ func init() {
 }
 
 func initConfigFile(ConfigPath string) {
-	Config.Mode = 1
+	//默认配置
 	Config.Port = 19000
+	Frp := FrpType{
+		Enable:     0,
+		ServerAddr: "127.0.0.1",
+		ServerPort: 7000,
+		Token:      "httpwinnotice123456",
+		RemotePort: 19001,
+	}
+	Config.Frp = Frp
+
 	updatedData, err := yaml.Marshal(Config)
 	if err != nil {
 		fmt.Println(err)
@@ -61,10 +78,6 @@ func InitConfig() {
 		fmt.Println("解析config失败")
 		log.Fatalln("解析config失败")
 	}
-	fmt.Println("config=")
-	fmt.Println(Config)
-	fmt.Println(Config.Mode)
-	fmt.Println(Config.Port)
 }
 
 func PortStr() string {
