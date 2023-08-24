@@ -1,20 +1,22 @@
-# HttpWinNotice
-
-
-<!-- PROJECT LOGO -->
-<br />
-
 <p align="center">
   <a href="https://github.com/shaojintian/Best_README_template/">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">HTTP Windows消息通知</h3>
+<h2 align="center">HTTP Windows消息通知</h2>
   <p align="center">
-  
-   
-
 </p>
+
+<div align="center">
+
+![GitHub](https://img.shields.io/github/license/shanghaobo/http-win-notice)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/shanghaobo/http-win-notice)
+![GitHub repo size](https://img.shields.io/github/repo-size/shanghaobo/http-win-notice)
+![GitHub Repo stars](https://img.shields.io/github/stars/shanghaobo/http-win-notice)
+![GitHub all releases](https://img.shields.io/github/downloads/shanghaobo/http-win-notice/total)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/shanghaobo/http-win-notice/master)
+  
+</div>
 
 > 一个运行在Windows本机的服务，监听http接口请求触发windows消息通知
 
