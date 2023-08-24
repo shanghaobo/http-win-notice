@@ -1,10 +1,6 @@
 <p align="center">
-  <a href="https://github.com/shaojintian/Best_README_template/">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-<h2 align="center">HTTP Windows消息通知</h2>
-  <p align="center">
+  <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <h2 align="center">HTTP Windows消息通知</h2>
 </p>
 
 <div align="center">
