@@ -12,6 +12,8 @@ var (
 	RootDir string
 )
 
+var AppPath string
+
 func init() {
 	userInfo, err := user.Current()
 	if nil != err {
@@ -24,5 +26,10 @@ func init() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+	}
+
+	AppPath, err = os.Executable()
+	if err != nil {
+		log.Fatalln("获取appPath失败", err)
 	}
 }

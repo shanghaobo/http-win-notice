@@ -1,12 +1,15 @@
 package constant
 
 const (
-	LinkSuffix = "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/http-win-notice.lnk"
-	BaseUrl    = "http://127.0.0.1"
-
-	ConfigFile = "config.yml"
-	DbFile     = "data.db"
+	LnkName      = "http-win-notice.lnk"
+	LinkSuffix   = "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/" + LnkName
+	StartMenuLnk = "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/" + LnkName
+	BaseUrl      = "http://127.0.0.1"
+	ConfigFile   = "config.yml"
+	DbFile       = "data.db"
 )
+
+const AppID = "HttpWinNotice"
 
 const (
 	DefaultTitle = "消息通知"
