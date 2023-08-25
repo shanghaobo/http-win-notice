@@ -2,12 +2,13 @@ package notice
 
 import (
 	"github.com/go-toast/toast"
+	"http-win-notice/utils/constant"
 	"http-win-notice/utils/setting"
 )
 
 func Notice(msg, title string) error {
 	notification := toast.Notification{
-		AppID:   "http-win-toast",
+		AppID:   constant.AppID,
 		Title:   title,
 		Message: msg,
 		Icon:    setting.LogoPath,
