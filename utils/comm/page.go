@@ -3,12 +3,19 @@ package comm
 import (
 	"http-win-notice/utils/constant"
 	"http-win-notice/utils/setting"
+	"log"
 	"os/exec"
 	"strconv"
+	"syscall"
 )
 
 func openUrl(url string) {
-	exec.Command(`cmd`, `/c`, `start`, url).Start()
+	cmd := exec.Command(`cmd`, `/c`, `start`, url)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	err := cmd.Start()
+	if err != nil {
+		log.Println("url打开失败：", url)
+	}
 }
 
 func OpenHomePage() {
