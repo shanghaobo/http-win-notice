@@ -199,7 +199,7 @@ port: 19000
 toast:
   icons:
     - logo.png
-    - logo11.png
+    - logo2.png
 frp:
   enable: 0
   server_addr: 127.0.0.1
