@@ -12,6 +12,10 @@ import (
 func ToastApi(c *gin.Context) {
 	msg := c.DefaultQuery("msg", constant.DefaultMsg)
 	title := c.DefaultQuery("title", constant.DefaultTitle)
+	icon := c.DefaultQuery("icon", constant.DefaultIcon)
+	duration := c.DefaultQuery("duration", string(constant.DefaultDuration))
+	audio := c.DefaultQuery("audio", string(constant.DefaultAudio))
+
 	remark := c.Query("remark")
 
 	data := model.Msg{
@@ -27,7 +31,7 @@ func ToastApi(c *gin.Context) {
 		return
 	}
 	go func() {
-		err := notice.Notice(msg, title)
+		err := notice.Notice(msg, title, icon, duration, audio)
 		if err != nil {
 			model.UpdateMsgStatus(data.ID, 9)
 		} else {

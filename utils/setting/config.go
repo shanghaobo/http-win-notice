@@ -17,10 +17,16 @@ var Config ConfigType
 var LogPath string
 var DbPath string
 var LogoPath string
+var ImagesDir string
 
 type ConfigType struct {
-	Port int     `yaml:"port"`
-	Frp  FrpType `yaml:"frp"`
+	Port  int       `yaml:"port"`
+	Toast ToastType `yaml:"toast"`
+	Frp   FrpType   `yaml:"frp"`
+}
+
+type ToastType struct {
+	Icons []string `yaml:"icons"`
 }
 
 type FrpType struct {
@@ -39,10 +45,20 @@ func init() {
 	InitConfig()
 	LogPath = path.Join(utils.RootDir, "log.log")
 	DbPath = path.Join(utils.RootDir, constant.DbFile)
-	LogoPath = path.Join(utils.RootDir, "logo.png")
+
+	ImagesDir = path.Join(utils.RootDir, "images")
+	if _, err := os.Stat(ImagesDir); os.IsNotExist(err) {
+		err = os.Mkdir(ImagesDir, os.ModeDir)
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}
+
+	LogoPath = path.Join(ImagesDir, "logo.png")
 	if _, err := os.Stat(LogoPath); os.IsNotExist(err) {
 		b64.WriteImgFileByBase64(constant.LogoImgBase64, LogoPath)
 	}
+
 }
 
 func initConfigFile(ConfigPath string) {
@@ -56,6 +72,12 @@ func initConfigFile(ConfigPath string) {
 		RemotePort: 19001,
 	}
 	Config.Frp = Frp
+
+	icons := []string{"logo.png"}
+	Toast := ToastType{
+		Icons: icons,
+	}
+	Config.Toast = Toast
 
 	updatedData, err := yaml.Marshal(Config)
 	if err != nil {
