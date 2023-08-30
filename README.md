@@ -56,6 +56,7 @@
      res = requests.get(f"http://127.0.0.1:19000/api/toast?msg={msg}&title={title}")
      print(res.json())
        ```
+     详情可见 [接口文档](#接口文档)
 5. 可右击托盘图标，点击配置文件修改端口号
 6. 可打开web界面查看历史消息记录
 
@@ -73,6 +74,66 @@
 - 消息通知记录
 
   ![](images/demo1.png)
+
+## 接口文档
+
+#### 发送通知
+
+- API: `http://hostname:port/api/toast`
+- 请求方式：`GET`
+- 请求参数
+
+| 参数名      | 默认值      | 解释                             |
+|----------|----------|--------------------------------|
+| title    | 消息通知     | 通知标题                           |
+| msg      | 这是一条测试消息 | 通知内容                           |
+| title    | 消息通知     | 通知标题                           |
+| icon     | 0        | 图标索引，配合配置文件使用                  |
+| duration | short    | 持续时长，short-短，大概6秒 long-长，大概25秒 |
+| audio    | default  | 声音                             |
+
+其中`icon`需修改配置文件，参考配置如下：
+```yaml
+toast:
+  icons:
+    - logo.png
+    - logo2.png
+```
+此时传`icon=1`表示使用`logo2.png`图标，图标图片需放在`config.yml`同级的`images`目录内
+
+<details>
+<summary>audio的参数可选值如下：</summary>
+
+| 值              | 描述             |
+|----------------|----------------|
+| default        | Default        |
+| im             | IM             |
+| mail           | Mail           |
+| reminder       | Reminder       |
+| sms            | SMS            |
+| loopingalarm   | LoopingAlarm   |
+| loopingalarm2  | LoopingAlarm2  |
+| loopingalarm3  | LoopingAlarm3  |
+| loopingalarm4  | LoopingAlarm4  |
+| loopingalarm5  | LoopingAlarm5  |
+| loopingalarm6  | LoopingAlarm6  |
+| loopingalarm7  | LoopingAlarm7  |
+| loopingalarm8  | LoopingAlarm8  |
+| loopingalarm9  | LoopingAlarm9  |
+| loopingalarm10 | LoopingAlarm10 |
+| loopingcall    | LoopingCall    |
+| loopingcall2   | LoopingCall2   |
+| loopingcall3   | LoopingCall3   |
+| loopingcall4   | LoopingCall4   |
+| loopingcall5   | LoopingCall5   |
+| loopingcall6   | LoopingCall6   |
+| loopingcall7   | LoopingCall7   |
+| loopingcall8   | LoopingCall8   |
+| loopingcall9   | LoopingCall9   |
+| loopingcall10  | LoopingCall10  |
+
+</details>
+
 
 
 ## 开启frp内网穿透
