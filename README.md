@@ -188,3 +188,22 @@ frp:
 #### 测试
 
 浏览器打开`http://123.123.1.2:19001/api/toast?msg=哈喽` 如果windows通知出现证明开启成功（ip和端口号替换为自己的）
+
+
+## 其他
+
+#### 完整配置参考
+
+```yaml
+port: 19000
+toast:
+  icons:
+    - logo.png
+    - logo11.png
+frp:
+  enable: 0
+  server_addr: 127.0.0.1
+  server_port: 7000
+  token: httpwinnotice123456
+  remote_port: 19001
+```
