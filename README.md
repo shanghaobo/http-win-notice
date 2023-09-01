@@ -135,6 +135,57 @@ toast:
 </details>
 
 
+## 开启socket转发（dev）
+- 开启socket转发需要有一台带公网ip的服务器
+- 配置并开启后可实现公网调用接口发送通知
+- socket转发还在测试阶段，需要稳定可先使用frp [开启frp内网穿透](#开启frp内网穿透)
+
+#### 服务端配置
+1. 下载对应的`forward-server`
+   - windows服务器下载`forward-server.exe`
+   - linux服务器下载`forward-server`
+2. 在同级目录下创建`config.yml`配置文件，参考如下：
+
+    ```yaml
+    server_port: 9919
+    token: httpwinnotice123456
+    api_port: 19009
+    api_token: httpforward123456
+    ```
+   - server_port: 转发服务的socket端口号
+   - token: 安全认证，与客户端配置保持一致，建议修改默认值
+   - api_port: 转发api的端口号
+   - api_token: 调用转发api的认证token
+
+3. 启动转发服务（Linux环境）
+
+    ```bash
+    # 直接启动
+    ./forward-server
+    
+    # 后台启动
+    nohup ./forward-server >> nohup.out &
+    ```
+#### 客户端配置
+1. 右击托盘图标选择`配置文件`，修改配置文件内`forward`相关内容并保存。参考配置如下：
+
+    ```yaml
+    forward:
+      enable: 1
+      server_addr: 123.123.1.1
+      server_port: 9919
+      token: httpwinnotice123456
+    ```
+   - enable: 0-关闭 1-开启转发服务
+   - server_addr: 转发服务器ip
+   - server_port: 转发服务端口号
+   - token: 与服务器配置的token保持一致，建议修改默认值
+
+配置好后重启程序
+
+#### 测试
+
+按示例的配置，浏览器请求`http://123.123.1.1:19009?msg=哈喽`，若本机出现弹窗证明成功
 
 ## 开启frp内网穿透
 
@@ -206,4 +257,9 @@ frp:
   server_port: 7000
   token: httpwinnotice123456
   remote_port: 19001
+forward:
+  enable: 1
+  server_addr: 123.123.1.1
+  server_port: 9919
+  token: httpwinnotice123456
 ```

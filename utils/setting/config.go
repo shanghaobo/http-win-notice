@@ -20,9 +20,10 @@ var LogoPath string
 var ImagesDir string
 
 type ConfigType struct {
-	Port  int       `yaml:"port"`
-	Toast ToastType `yaml:"toast"`
-	Frp   FrpType   `yaml:"frp"`
+	Port    int         `yaml:"port"`
+	Toast   ToastType   `yaml:"toast"`
+	Frp     FrpType     `yaml:"frp"`
+	Forward ForwardType `yaml:"forward"`
 }
 
 type ToastType struct {
@@ -35,6 +36,13 @@ type FrpType struct {
 	ServerPort int    `yaml:"server_port"`
 	Token      string `yaml:"token"`
 	RemotePort int    `yaml:"remote_port"`
+}
+
+type ForwardType struct {
+	Enable     int    `yaml:"enable"`
+	ServerAddr string `yaml:"server_addr"`
+	ServerPort int    `yaml:"server_port"`
+	Token      string `yaml:"token"`
 }
 
 func init() {
@@ -78,6 +86,15 @@ func initConfigFile(ConfigPath string) {
 		Icons: icons,
 	}
 	Config.Toast = Toast
+
+	//默认转发配置
+	Forward := ForwardType{
+		Enable:     0,
+		ServerAddr: "127.0.0.1",
+		ServerPort: 9919,
+		Token:      "httpwinnotice123456",
+	}
+	Config.Forward = Forward
 
 	updatedData, err := yaml.Marshal(Config)
 	if err != nil {
