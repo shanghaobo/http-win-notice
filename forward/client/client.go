@@ -1,0 +1,17 @@
+package client
+
+import (
+	"github.com/shanghaobo/go-http-forward/client"
+	"http-win-notice/utils/setting"
+	"strconv"
+)
+
+func StartClient() {
+	if setting.Config.Forward.Enable != 1 {
+		return
+	}
+	go func() {
+		forward := setting.Config.Forward
+		client.Start(forward.Host, strconv.Itoa(forward.Port), forward.Token, "http://127.0.0.1:"+strconv.Itoa(setting.Config.Port)+"/api/toast")
+	}()
+}

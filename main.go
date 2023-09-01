@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/getlantern/systray"
 	"github.com/skratchdot/open-golang/open"
+	"http-win-notice/forward/client"
 	"http-win-notice/frp"
 	"http-win-notice/makelnk"
 	"http-win-notice/model"
@@ -17,6 +18,7 @@ func init() {
 	comm.InitLog()
 	model.InitDb()
 	makelnk.RegisterAppUserModeId()
+	client.StartClient()
 	frp.StartFrp()
 }
 
