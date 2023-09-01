@@ -136,6 +136,9 @@ toast:
 
 
 ## 开启socket转发（dev）
+- 开启socket转发需要有一台带公网ip的服务器
+- 配置并开启后可实现公网调用接口发送通知
+- socket转发还在测试阶段，需要稳定可先使用frp [开启frp内网穿透](#开启frp内网穿透)
 
 #### 服务端配置
 1. 下载对应的`forward-server`
@@ -154,7 +157,7 @@ toast:
    - api_port: 转发api的端口号
    - api_token: 调用转发api的认证token
 
-3. 启动转发服务
+3. 启动转发服务（Linux环境）
 
     ```bash
     # 直接启动
@@ -254,4 +257,9 @@ frp:
   server_port: 7000
   token: httpwinnotice123456
   remote_port: 19001
+forward:
+  enable: 1
+  server_addr: 123.123.1.1
+  server_port: 9919
+  token: httpwinnotice123456
 ```
