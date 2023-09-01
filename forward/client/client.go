@@ -12,6 +12,6 @@ func StartClient() {
 	}
 	go func() {
 		forward := setting.Config.Forward
-		client.Start(forward.Host, strconv.Itoa(forward.Port), forward.Token, "http://127.0.0.1:"+strconv.Itoa(setting.Config.Port)+"/api/toast")
+		client.Start(forward.ServerAddr, strconv.Itoa(forward.ServerPort), forward.Token, "http://127.0.0.1:"+strconv.Itoa(setting.Config.Port)+"/api/toast")
 	}()
 }

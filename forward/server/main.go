@@ -31,5 +31,5 @@ func init() {
 }
 
 func main() {
-	server.Start(strconv.Itoa(Config.SocketPort), Config.Token, Config.ApiToken, strconv.Itoa(Config.Port))
+	server.Start(strconv.Itoa(Config.ServerPort), Config.Token, Config.ApiToken, strconv.Itoa(Config.ApiPort))
 }

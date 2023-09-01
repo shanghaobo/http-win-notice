@@ -39,10 +39,10 @@ type FrpType struct {
 }
 
 type ForwardType struct {
-	Enable int    `yaml:"enable"`
-	Host   string `yaml:"host"`
-	Port   int    `yaml:"port"`
-	Token  string `yaml:"token"`
+	Enable     int    `yaml:"enable"`
+	ServerAddr string `yaml:"server_addr"`
+	ServerPort int    `yaml:"server_port"`
+	Token      string `yaml:"token"`
 }
 
 func init() {
@@ -89,10 +89,10 @@ func initConfigFile(ConfigPath string) {
 
 	//默认转发配置
 	Forward := ForwardType{
-		Enable: 0,
-		Host:   "127.0.0.1",
-		Port:   9919,
-		Token:  "httpwinnotice123456",
+		Enable:     0,
+		ServerAddr: "127.0.0.1",
+		ServerPort: 9919,
+		Token:      "httpwinnotice123456",
 	}
 	Config.Forward = Forward
 

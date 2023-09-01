@@ -1,8 +1,8 @@
 package main
 
 type ConfigType struct {
-	SocketPort int    `yaml:"socket_port"`
+	ServerPort int    `yaml:"server_port"`
 	Token      string `yaml:"token"`
 	ApiToken   string `yaml:"api_token"`
-	Port       int    `yaml:"port"`
+	ApiPort    int    `yaml:"api_port"`
 }

@@ -1,4 +1,4 @@
-socket_port: 9919
-port: 19009
+server_port: 9919
 token: httpwinnotice123456
+api_port: 19009
 api_token: httpforward123456
