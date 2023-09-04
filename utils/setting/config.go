@@ -20,6 +20,7 @@ var LogoPath string
 var ImagesDir string
 
 type ConfigType struct {
+	Debug   int         `yaml:"debug"`
 	Port    int         `yaml:"port"`
 	Toast   ToastType   `yaml:"toast"`
 	Frp     FrpType     `yaml:"frp"`
@@ -71,6 +72,7 @@ func init() {
 
 func initConfigFile(ConfigPath string) {
 	//默认配置
+	Config.Debug = 0
 	Config.Port = 19000
 	Frp := FrpType{
 		Enable:     0,
