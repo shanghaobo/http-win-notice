@@ -24,7 +24,7 @@ func init() {
 		log.Fatalln(err)
 	}
 	linkPath = path.Join(userInfo.HomeDir, constant.LinkSuffix)
-	
+
 	appPath, err = os.Executable()
 	if err != nil {
 		log.Fatalln(err)
@@ -36,8 +36,10 @@ func InitLog() {
 	log.SetOutput(logFile)
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	//os.Stdout = logFile
-	//os.Stderr = logFile
+	if setting.Config.Debug == 1 {
+		os.Stdout = logFile
+		os.Stderr = logFile
+	}
 }
 
 // 创建快捷方式
