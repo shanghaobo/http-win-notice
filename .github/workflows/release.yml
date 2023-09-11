@@ -1,0 +1,46 @@
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  releases-main:
+    name: Release Main Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [windows]
+        goarch: ["386", amd64, arm64]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          goversion: 1.21.0
+          binary_name: "hello"
+          compress_assets: off
+          md5sum: false
+  releases-forward:
+    name: Release Forward Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [windows, linux]
+        goarch: ["386", amd64, arm64]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          goversion: 1.21.0
+          binary_name: "forward-server"
+          project_path: "./forward/server"
+          compress_assets: off
+          md5sum: false
