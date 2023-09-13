@@ -160,6 +160,8 @@ toast:
 3. 启动转发服务（Linux环境）
 
     ```bash
+   chmod +x ./forward-server
+   
     # 直接启动
     ./forward-server
     

@@ -3,8 +3,8 @@ package web
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"http-win-notice/utils/log"
 	"http-win-notice/utils/setting"
 	"net/http"
 	"time"
@@ -20,12 +20,12 @@ func runServer() *http.Server {
 	}
 	go func() {
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			fmt.Printf("Error starting server: %v\n", err)
+			log.Debug("Error starting server: %v\n", err)
 		}
 	}()
 
-	fmt.Println("Server started on :" + setting.PortStr())
-	
+	log.Debug("Server started on :" + setting.PortStr())
+
 	return server
 }
 
@@ -33,9 +33,9 @@ func closeServer(server *http.Server) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		fmt.Println("server shutdown error")
+		log.Debug("web server shutdown error")
 	} else {
-		fmt.Println("server stop")
+		log.Debug("web server stop")
 	}
 }
 
@@ -43,10 +43,10 @@ func ServerManage(serverCh chan bool) {
 	var server *http.Server
 	for {
 		if <-serverCh == true {
-			fmt.Println("start")
+			log.Debug("start web server")
 			server = runServer()
 		} else {
-			fmt.Println("stop")
+			log.Debug("stop web server")
 			closeServer(server)
 		}
 

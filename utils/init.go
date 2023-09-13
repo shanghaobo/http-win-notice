@@ -13,6 +13,7 @@ var (
 )
 
 var AppPath string
+var LogPath string
 
 func init() {
 	userInfo, err := user.Current()
@@ -32,4 +33,6 @@ func init() {
 	if err != nil {
 		log.Fatalln("获取appPath失败", err)
 	}
+
+	LogPath = path.Join(RootDir, "log.log")
 }

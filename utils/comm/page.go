@@ -2,8 +2,8 @@ package comm
 
 import (
 	"http-win-notice/utils/constant"
+	"http-win-notice/utils/log"
 	"http-win-notice/utils/setting"
-	"log"
 	"os/exec"
 	"strconv"
 	"syscall"
