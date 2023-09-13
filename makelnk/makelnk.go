@@ -4,7 +4,7 @@ import (
 	"embed"
 	"http-win-notice/utils"
 	"http-win-notice/utils/constant"
-	"log"
+	"http-win-notice/utils/log"
 	"os"
 	"os/exec"
 	"path"

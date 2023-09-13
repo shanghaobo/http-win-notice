@@ -1,12 +1,10 @@
 package comm
 
 import (
-	"fmt"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 	"http-win-notice/utils/constant"
-	"http-win-notice/utils/setting"
-	"log"
+	"http-win-notice/utils/log"
 	"os"
 	"os/exec"
 	"os/user"
@@ -28,17 +26,6 @@ func init() {
 	appPath, err = os.Executable()
 	if err != nil {
 		log.Fatalln(err)
-	}
-}
-
-func InitLog() {
-	logFile, _ := os.OpenFile(setting.LogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-	log.SetOutput(logFile)
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	if setting.Config.Debug == 1 {
-		os.Stdout = logFile
-		os.Stderr = logFile
 	}
 }
 
@@ -78,8 +65,8 @@ func createShortcut(source string, target string) error {
 
 // 创建快捷方式
 func MakeShortcut() {
-	fmt.Println("appPath=", appPath)
-	fmt.Println("linkPath=", linkPath)
+	log.Debug("appPath=", appPath)
+	log.Debug("linkPath=", linkPath)
 	err := createShortcut(appPath, linkPath)
 	if err != nil {
 		log.Fatalln(err)
@@ -102,7 +89,7 @@ func ShortcutExists() bool {
 }
 
 func RestartApp(serverCh chan bool) {
-	log.Println("restart start")
+	log.Debug("restart start")
 	serverCh <- false
 	exePath, err := os.Executable()
 	if err != nil {
@@ -115,6 +102,6 @@ func RestartApp(serverCh chan bool) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println("restart success")
+	log.Debug("restart success")
 	os.Exit(0)
 }

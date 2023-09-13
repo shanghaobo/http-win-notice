@@ -1,21 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"github.com/getlantern/systray"
 	"github.com/skratchdot/open-golang/open"
 	"http-win-notice/forward/client"
 	"http-win-notice/frp"
 	"http-win-notice/makelnk"
 	"http-win-notice/model"
+	"http-win-notice/utils"
 	"http-win-notice/utils/comm"
 	"http-win-notice/utils/icon"
+	"http-win-notice/utils/log"
 	"http-win-notice/utils/setting"
 	"http-win-notice/web"
 )
 
 func init() {
-	comm.InitLog()
 	model.InitDb()
 	makelnk.RegisterAppUserModeId()
 	client.StartClient()
@@ -58,7 +58,7 @@ func onReady() {
 			case <-settingMenu.ClickedCh:
 				open.Run(setting.ConfigPath)
 			case <-logMenu.ClickedCh:
-				open.Run(setting.LogPath)
+				open.Run(utils.LogPath)
 			case <-clientRunMenu.ClickedCh:
 				if clientRunMenu.Checked() {
 					clientRunMenu.Uncheck()
@@ -80,7 +80,7 @@ func onReady() {
 
 func onExit() {
 	// clean up here
-	fmt.Println("onExit")
+	log.Debug("app exit success")
 }
 
 func main() {

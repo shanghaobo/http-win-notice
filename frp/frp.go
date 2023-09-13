@@ -3,8 +3,8 @@ package frp
 import (
 	"embed"
 	"http-win-notice/utils"
+	"http-win-notice/utils/log"
 	"http-win-notice/utils/setting"
-	"log"
 	"os"
 	"os/exec"
 	"path"

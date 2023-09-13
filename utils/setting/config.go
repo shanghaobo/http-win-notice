@@ -1,12 +1,11 @@
 package setting
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v3"
 	"http-win-notice/utils"
 	"http-win-notice/utils/b64"
 	"http-win-notice/utils/constant"
-	"log"
+	"http-win-notice/utils/log"
 	"os"
 	"path"
 	"strconv"
@@ -14,7 +13,7 @@ import (
 
 var ConfigPath string
 var Config ConfigType
-var LogPath string
+
 var DbPath string
 var LogoPath string
 var ImagesDir string
@@ -52,7 +51,6 @@ func init() {
 		initConfigFile(ConfigPath)
 	}
 	InitConfig()
-	LogPath = path.Join(utils.RootDir, "log.log")
 	DbPath = path.Join(utils.RootDir, constant.DbFile)
 
 	ImagesDir = path.Join(utils.RootDir, "images")
@@ -100,23 +98,23 @@ func initConfigFile(ConfigPath string) {
 
 	updatedData, err := yaml.Marshal(Config)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln("create config error", err)
 	}
-	fmt.Println("create ConfigPath", ConfigPath)
+	log.Debug("create ConfigPath", ConfigPath)
 	err = os.WriteFile(ConfigPath, updatedData, 0644)
 }
 
 func InitConfig() {
+	log.Debug("start init config")
 	Config = ConfigType{}
 	dataBytes, err := os.ReadFile(ConfigPath)
 	if err != nil {
 		log.Fatalln("读取配置文件失败")
 	}
-	fmt.Println("yaml 文件的内容: \n", string(dataBytes))
+	log.Debug("yaml 文件的内容: \n", string(dataBytes))
 
 	err = yaml.Unmarshal(dataBytes, &Config)
 	if err != nil {
-		fmt.Println("解析config失败")
 		log.Fatalln("解析config失败")
 	}
 }
