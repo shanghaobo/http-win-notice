@@ -100,23 +100,27 @@ func initConfigFile(ConfigPath string) {
 	if err != nil {
 		log.Fatalln("create config error", err)
 	}
-	log.Debug("create ConfigPath", ConfigPath)
+	log.Info("create config path", ConfigPath)
 	err = os.WriteFile(ConfigPath, updatedData, 0644)
 }
 
 func InitConfig() {
-	log.Debug("start init config")
+	log.Info("start init config")
 	Config = ConfigType{}
 	dataBytes, err := os.ReadFile(ConfigPath)
 	if err != nil {
 		log.Fatalln("读取配置文件失败")
 	}
-	log.Debug("yaml 文件的内容: \n", string(dataBytes))
 
 	err = yaml.Unmarshal(dataBytes, &Config)
 	if err != nil {
 		log.Fatalln("解析config失败")
 	}
+
+	if Config.Debug == 1 {
+		log.SetLogLevel("debug")
+	}
+	log.Debug("config=", Config)
 }
 
 func PortStr() string {

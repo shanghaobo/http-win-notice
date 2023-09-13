@@ -11,12 +11,21 @@ var Logger *logrus.Logger
 
 func init() {
 	Logger = logrus.New()
-	Logger.SetLevel(logrus.DebugLevel)
+	Logger.SetLevel(logrus.InfoLevel)
 	Logger.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: time.DateTime,
 	})
 	logFile, _ := os.OpenFile(utils.LogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	Logger.SetOutput(logFile)
+}
+
+func SetLogLevel(level string) {
+	switch level {
+	case "debug":
+		Logger.SetLevel(logrus.DebugLevel)
+	default:
+		Logger.SetLevel(logrus.InfoLevel)
+	}
 }
 
 func Println(args ...interface{}) {
