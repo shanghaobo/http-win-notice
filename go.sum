@@ -99,6 +99,10 @@ github.com/shanghaobo/go-http-forward v1.0.2 h1:1GBgma4VduPhF9csYYUmsInybrxj8QRZ
 github.com/shanghaobo/go-http-forward v1.0.2/go.mod h1:LQMTzGbVpRyCtLCsNfhTlvS0VJW9rOu69WVKtPGnKHQ=
 github.com/shanghaobo/go-http-forward v1.0.3 h1:NeRn74LZv8bJ4ivUKXnvqTjxINtMHn4KR1wuYT+X+pw=
 github.com/shanghaobo/go-http-forward v1.0.3/go.mod h1:LQMTzGbVpRyCtLCsNfhTlvS0VJW9rOu69WVKtPGnKHQ=
+github.com/shanghaobo/go-http-forward v1.0.4 h1:nhdy/7SyJLccOVE3FFUxV/tS4BNSAMQI7qn/1/EFe14=
+github.com/shanghaobo/go-http-forward v1.0.4/go.mod h1:LQMTzGbVpRyCtLCsNfhTlvS0VJW9rOu69WVKtPGnKHQ=
+github.com/shanghaobo/go-http-forward v1.0.5 h1:IwNnI342rCL4MiA0CeJRSoWTKiNG21GoduZLQ6GlJPY=
+github.com/shanghaobo/go-http-forward v1.0.5/go.mod h1:LQMTzGbVpRyCtLCsNfhTlvS0VJW9rOu69WVKtPGnKHQ=
 github.com/shanghaobo/toast v0.0.0-20230821024402-35c58724ffe1 h1:obMyqpCX8oLFYGPslwsAR3X9SeZq3TetATjd4h/oNDo=
 github.com/shanghaobo/toast v0.0.0-20230821024402-35c58724ffe1/go.mod h1:UmYL/gFYmdaS0iIRmXnFRBJNC1TtK/wp4NcJeuYVU7Q=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
