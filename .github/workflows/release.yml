@@ -25,6 +25,7 @@ jobs:
           binary_name: "http-win-notice"
           compress_assets: off
           md5sum: false
+          pre_command: "go install github.com/akavel/rsrc&&rsrc -ico ./build/logo.ico -o resources.syso&&go env -w CGO_ENABLED=1"
   releases-forward:
     name: Release Forward Binary
     runs-on: ubuntu-latest
