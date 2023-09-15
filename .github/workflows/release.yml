@@ -26,7 +26,7 @@ jobs:
           compress_assets: off
           md5sum: false
           ldflags: "-extldflags -static -H windowsgui -s -w"
-          pre_command: go get github.com/akavel/rsrc&&go install github.com/akavel/rsrc&&rsrc -arch ${{ matrix.goarch }} -ico ./utils/icon/logo.ico -o resources.syso&&CGO_ENABLED=1
+          pre_command: go get github.com/akavel/rsrc&&go install github.com/akavel/rsrc&&rsrc -arch ${{ matrix.goarch }} -ico ./utils/icon/logo.ico -o resources.syso
   releases-forward:
     name: Release Forward Binary
     runs-on: ubuntu-latest
