@@ -15,6 +15,13 @@ jobs:
         goos: [windows]
         goarch: ["386", amd64]
     steps:
+      - name: Get Release Info
+        run: |
+          {
+            echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
+            echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}"
+            echo "OS_NAME=${{ matrix.goos }}"
+          } >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - uses: wangyoucao577/go-release-action@v1.40
         with:
@@ -36,6 +43,13 @@ jobs:
         goos: [windows, linux]
         goarch: ["386", amd64, arm64]
     steps:
+      - name: Get Release Info
+        run: |
+          {
+            echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
+            echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}"
+            echo "OS_NAME=${{ matrix.goos }}"
+          } >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - uses: wangyoucao577/go-release-action@v1.40
         with:
