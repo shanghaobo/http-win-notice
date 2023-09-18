@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         goos: [windows]
-        goarch: ["386", amd64, arm64]
+        goarch: ["386", amd64]
     steps:
       - uses: actions/checkout@v3
       - uses: wangyoucao577/go-release-action@v1.40
@@ -25,8 +25,9 @@ jobs:
           binary_name: "http-win-notice"
           compress_assets: off
           md5sum: false
+          asset_name: "http-win-notice_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
           ldflags: "-extldflags -static -H windowsgui -s -w"
-          pre_command: go get github.com/akavel/rsrc&&go install github.com/akavel/rsrc&&rsrc -arch ${{ matrix.goarch }} -ico ./utils/icon/logo.ico -o resources.syso
+          pre_command: go get github.com/akavel/rsrc&&go install github.com/akavel/rsrc&&rsrc -arch ${{ matrix.goarch }} -ico ./utils/icon/logo.ico -o resources.syso&&apt-get update && apt-get install -y mingw-w64 && if [ "${{ matrix.goarch }}" = "amd64" ]; then export CC=x86_64-w64-mingw32-gcc; else export CC=i686-w64-mingw32-gcc; fi && export CGO_ENABLED=1
   releases-forward:
     name: Release Forward Binary
     runs-on: ubuntu-latest
@@ -46,3 +47,4 @@ jobs:
           project_path: "./forward/server"
           compress_assets: off
           md5sum: false
+          asset_name: "forward-server_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
