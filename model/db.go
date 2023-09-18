@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/glebarez/sqlite"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"http-win-notice/utils/setting"
 )
