@@ -33,7 +33,7 @@ jobs:
           compress_assets: off
           md5sum: false
           asset_name: "http-win-notice_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
-          ldflags: "-extldflags -static -H windowsgui -s -w"
+          ldflags: "-extldflags -static -H windowsgui -s -w -X 'http-win-notice/utils/setting.Version=${{ env.RELEASE_TAG }}'"
           pre_command: go get github.com/akavel/rsrc&&go install github.com/akavel/rsrc&&rsrc -arch ${{ matrix.goarch }} -ico ./utils/icon/logo.ico -o resources.syso&&apt-get update && apt-get install -y mingw-w64 && if [ "${{ matrix.goarch }}" = "amd64" ]; then export CC=x86_64-w64-mingw32-gcc; else export CC=i686-w64-mingw32-gcc; fi && export CGO_ENABLED=1
   releases-forward:
     name: Release Forward Binary
