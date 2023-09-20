@@ -18,6 +18,8 @@ var DbPath string
 var LogoPath string
 var ImagesDir string
 
+var Version string = "v0.0.0"
+
 type ConfigType struct {
 	Debug   int         `yaml:"debug"`
 	Port    int         `yaml:"port"`
