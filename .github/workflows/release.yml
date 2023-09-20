@@ -59,6 +59,7 @@ jobs:
           goversion: 1.21.0
           binary_name: "forward-server"
           project_path: "./forward/server"
+          extra_files: forward/server/config.yml
           compress_assets: auto
           md5sum: false
           asset_name: "forward-server_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
