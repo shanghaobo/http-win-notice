@@ -34,7 +34,7 @@ func onReady() {
 		systray.AddSeparator()
 		restartMenu := systray.AddMenuItem("重启程序", "重启程序")
 		serverCh <- true
-		clientRunMenu := systray.AddMenuItemCheckbox("服务启动", "服务启动", true)
+		//clientRunMenu := systray.AddMenuItemCheckbox("服务启动", "服务启动", true)
 		webMenu := systray.AddMenuItem("查看记录", "点击打开web页面")
 		logMenu := systray.AddMenuItem("日志文件", "日志文件")
 		settingMenu := systray.AddMenuItem("配置文件", "配置文件")
@@ -63,14 +63,14 @@ func onReady() {
 				open.Run(setting.ConfigPath)
 			case <-logMenu.ClickedCh:
 				open.Run(utils.LogPath)
-			case <-clientRunMenu.ClickedCh:
-				if clientRunMenu.Checked() {
-					clientRunMenu.Uncheck()
-					serverCh <- false
-				} else {
-					clientRunMenu.Check()
-					serverCh <- true
-				}
+			//case <-clientRunMenu.ClickedCh:
+			//	if clientRunMenu.Checked() {
+			//		clientRunMenu.Uncheck()
+			//		serverCh <- false
+			//	} else {
+			//		clientRunMenu.Check()
+			//		serverCh <- true
+			//	}
 			case <-restartMenu.ClickedCh:
 				comm.RestartApp(serverCh)
 			case <-quitMenu.ClickedCh:
