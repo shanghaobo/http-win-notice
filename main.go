@@ -29,6 +29,9 @@ func onReady() {
 		systray.SetIcon(icon.Data)
 		systray.SetTitle("HttpWinNotice")
 		systray.SetTooltip("Http消息通知")
+		versionMenu := systray.AddMenuItem("版本 "+setting.Version, "版本号")
+		versionMenu.Disable()
+		systray.AddSeparator()
 		restartMenu := systray.AddMenuItem("重启程序", "重启程序")
 		serverCh <- true
 		clientRunMenu := systray.AddMenuItemCheckbox("服务启动", "服务启动", true)
@@ -41,6 +44,7 @@ func onReady() {
 		}
 		autoLunchMenu := systray.AddMenuItemCheckbox("开机启动", "开机启动", autoLunchFlag)
 		systray.AddSeparator()
+
 		quitMenu := systray.AddMenuItem("退出", "Quit the whole app")
 
 		for {
