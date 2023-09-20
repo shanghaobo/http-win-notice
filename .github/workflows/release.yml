@@ -30,7 +30,7 @@ jobs:
           goarch: ${{ matrix.goarch }}
           goversion: 1.21.0
           binary_name: "http-win-notice"
-          compress_assets: off
+          compress_assets: auto
           md5sum: false
           asset_name: "http-win-notice_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
           ldflags: "-extldflags -static -H windowsgui -s -w -X 'http-win-notice/utils/setting.Version=${{ env.RELEASE_TAG }}'"
@@ -59,6 +59,6 @@ jobs:
           goversion: 1.21.0
           binary_name: "forward-server"
           project_path: "./forward/server"
-          compress_assets: off
+          compress_assets: auto
           md5sum: false
           asset_name: "forward-server_${{ env.RELEASE_TAG }}_${{ env.OS_NAME }}_${{ matrix.goarch }}"
