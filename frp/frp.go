@@ -1,7 +1,6 @@
 package frp
 
 import (
-	"embed"
 	"http-win-notice/utils"
 	"http-win-notice/utils/log"
 	"http-win-notice/utils/setting"
@@ -11,9 +10,6 @@ import (
 	"strconv"
 	"syscall"
 )
-
-//go:embed frpc.exe
-var frpClient embed.FS
 
 const FrpConfigTemplate = `[common]
 server_addr = ${ServerAddr}
@@ -44,29 +40,21 @@ func initFrpConfig() {
 	}
 }
 
-func initFrp() {
-	frpPath := path.Join(utils.RootDir, "frpc.exe")
-	if _, err := os.Stat(frpPath); os.IsNotExist(err) {
-		frpExeData, _ := frpClient.ReadFile("frpc.exe")
-		err = os.WriteFile(frpPath, frpExeData, 0755)
-		if err != nil {
-			log.Fatalln("frp创建失败", err)
-		}
-	}
-
-}
-
 func StartFrp() {
 	go func() {
 		if setting.Config.Frp.Enable != 1 {
 			return
 		}
-		initFrp()
 		initFrpConfig()
 		frpExePath := path.Join(utils.RootDir, "frpc.exe")
+		if _, err := os.Stat(frpExePath); os.IsNotExist(err) {
+			log.Println("启动frpc失败: " + frpExePath + "不存在")
+			return
+		}
 		configPath := path.Join(utils.RootDir, "frpc.ini")
 		cmd := exec.Command(frpExePath, "-c", configPath)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		log.Println("start launch frpc")
 		err := cmd.Start()
 		if err != nil {
 			log.Fatalln("frp启动失败", err)
