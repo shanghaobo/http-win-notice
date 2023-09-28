@@ -34,13 +34,13 @@
 ![](images/jiagou.png)
 
 - 内网环境下，局域网内可通过内网ip+端口调用，如`http://192.168.124.11:19000`
-- 公网环境可选择开启（默认关闭），配置开启后公网内可通过`frps`所在服务器公网ip+映射端口调用，如`http://123.123.1.2:19001`，此时请求经过公网服务器的frps服务转发给本机的frpc，frpc再将请求转发给本地web服务从而触发消息通知。详情查看[开启frp内网穿透](#开启frp内网穿透)
+- 公网环境可选择开启，配置开启后可通过公网调用，如`http://123.123.1.2:19001`，此时公网调用请求会转发到本机的web服务，从而触发消息通知。详情查看[公网调用](#公网调用)
 
 
 ## 使用
 
-1. 直接下载编译后的exe文件
-2. 双击exe启动
+1. 下载对应版本的`http-win-notice`压缩包，[下载地址](https://github.com/shanghaobo/http-win-notice/releases/latest)
+2. 解压后双击`http-win-notice.exe`启动
 3. 右击托盘图标勾选开机启动
 4. 通知调用
    - 方式1
@@ -134,16 +134,15 @@ toast:
 
 </details>
 
+## 公网调用
 
-## 开启socket转发（dev）
-- 开启socket转发需要有一台带公网ip的服务器
+- 开启公网调用需要有一台带公网ip的服务器
 - 配置并开启后可实现公网调用接口发送通知
-- socket转发还在测试阶段，需要稳定可先使用frp [开启frp内网穿透](#开启frp内网穿透)
+
+### 方式1: 使用forward（推荐）
 
 #### 服务端配置
-1. 下载对应的`forward-server`
-   - windows服务器下载`forward-server.exe`
-   - linux服务器下载`forward-server`
+1. 下载对应的`forward-server`，[下载地址](https://github.com/shanghaobo/http-win-notice/releases/latest)
 2. 在同级目录下创建`config.yml`配置文件，参考如下：
 
     ```yaml
@@ -189,15 +188,11 @@ toast:
 
 按示例的配置，浏览器请求`http://123.123.1.1:19009?msg=哈喽`，若本机出现弹窗证明成功
 
-## 开启frp内网穿透
-
-- 开启frp需要有一台带公网ip的服务器，配置并开启后可实现公网调用接口发送通知。
-
-- 客户端内已集成了`frpc（v0.51.3）`
+### 方式2: 使用frp内网穿透
 
 #### 服务端配置
 
-1. 下载`frps`，选择对应服务器版本即可。[下载地址](https://github.com/fatedier/frp/releases/tag/v0.51.3)
+1. 下载`frps`，选择对应服务器版本即可。[下载地址](https://github.com/fatedier/frp/releases/latest)
 2. 修改`frps.ini`配置文件，配置参考：
 
 - frps.ini
@@ -215,7 +210,8 @@ chmod +x ./frps
 
 #### 客户端配置
 
-1. 右击托盘图标选择`配置文件`，修改配置文件内`frp`相关内容并保存。参考配置如下：
+1. 右击托盘图标选择配置目录，下载`frpc.exe`文件并移动到打开的配置目录内。[下载地址](https://github.com/fatedier/frp/releases/latest)
+2. 右击托盘图标选择配置文件，修改配置文件中`frp`相关内容并保存。参考配置如下：
     
 ```yaml
 frp:
@@ -253,15 +249,15 @@ toast:
   icons:
     - logo.png
     - logo2.png
+forward:
+  enable: 1
+  server_addr: 123.123.1.1
+  server_port: 9919
+  token: httpwinnotice123456
 frp:
   enable: 0
   server_addr: 127.0.0.1
   server_port: 7000
   token: httpwinnotice123456
   remote_port: 19001
-forward:
-  enable: 1
-  server_addr: 123.123.1.1
-  server_port: 9919
-  token: httpwinnotice123456
 ```
