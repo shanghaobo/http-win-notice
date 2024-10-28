@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+type Action = toast.Action
+
 func notificationSetAttr(n *toast.Notification, duration string, audio string) {
 	switch duration {
 	case "long":
@@ -77,7 +79,7 @@ func notificationSetAttr(n *toast.Notification, duration string, audio string) {
 
 }
 
-func Notice(msg, title, icon, duration, audio string) error {
+func Notice(msg, title, icon, duration, audio string, actions []toast.Action) error {
 	iconIndex, err := strconv.Atoi(icon)
 	if err != nil {
 		iconIndex = 0
@@ -89,14 +91,22 @@ func Notice(msg, title, icon, duration, audio string) error {
 	} else {
 		iconPath = path.Join(setting.ImagesDir, setting.Config.Toast.Icons[iconIndex])
 	}
+	for i := range actions {
+		if actions[i].Arguments == "$WEB_PAGE" {
+			actions[i].Arguments = setting.HomeUrl()
+		}
+	}
+	if len(actions) == 0 {
+		actions = []Action{
+			{"protocol", "查看", setting.HomeUrl()},
+		}
+	}
 	notification := toast.Notification{
 		AppID:   constant.AppID,
 		Title:   title,
 		Message: msg,
 		Icon:    iconPath,
-		Actions: []toast.Action{
-			{"protocol", "查看", setting.HomeUrl()},
-		},
+		Actions: actions,
 	}
 	notificationSetAttr(&notification, duration, audio)
 	//fmt.Println("n=", notification)
