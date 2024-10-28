@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"http-win-notice/model"
 	"http-win-notice/utils/constant"
@@ -9,15 +10,34 @@ import (
 	"strconv"
 )
 
+type Button struct {
+	Name string `json:"name"`
+	Url  string `json:"url"`
+}
+
 func ToastApi(c *gin.Context) {
 	msg := c.DefaultQuery("msg", constant.DefaultMsg)
 	title := c.DefaultQuery("title", constant.DefaultTitle)
 	icon := c.DefaultQuery("icon", constant.DefaultIcon)
 	duration := c.DefaultQuery("duration", string(constant.DefaultDuration))
 	audio := c.DefaultQuery("audio", string(constant.DefaultAudio))
+	button := c.DefaultQuery("button", "")
 
 	remark := c.Query("remark")
 
+	var buttonData []Button
+	var actions []notice.Action
+	err := json.Unmarshal([]byte(button), &buttonData)
+	if err == nil {
+		for _, bt := range buttonData {
+			action := notice.Action{
+				Type:      "protocol",
+				Label:     bt.Name,
+				Arguments: bt.Url,
+			}
+			actions = append(actions, action)
+		}
+	}
 	data := model.Msg{
 		Title:  title,
 		Msg:    msg,
@@ -31,7 +51,7 @@ func ToastApi(c *gin.Context) {
 		return
 	}
 	go func() {
-		err := notice.Notice(msg, title, icon, duration, audio)
+		err := notice.Notice(msg, title, icon, duration, audio, actions)
 		if err != nil {
 			model.UpdateMsgStatus(data.ID, 9)
 		} else {
